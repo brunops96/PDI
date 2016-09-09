@@ -22,6 +22,7 @@ void filtroIng(){
         for(y=0;y<img->altura;y++)
             for(x=0;x<img->largura;x++)
                 img_out->dados[i][y][x]=0;
+                
     for(i=0;i<img->n_canais;i++){
         for(y=(JANELA_A-1)/2;y<img->altura-(JANELA_A-1)/2;y++){
             for(x=(JANELA_L-1)/2;x<img->largura-(JANELA_L-1)/2;x++){
@@ -33,7 +34,7 @@ void filtroIng(){
             }
         }
     }
-    printf("hsuahua");
+    
     salvaImagem(img_out,"saidaIng.bmp");
 }
 
