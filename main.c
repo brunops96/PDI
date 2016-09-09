@@ -79,8 +79,8 @@ void filtroInt(){
         for(y=0;y<img->altura;y++){
             for(x=0;x<img->largura;x++){
               Coordenada direita,esquerda, cima ,inter;
-              direita.x = x+JANELA_L/2%img->largura;
-              direita.y = y+JANELA_L/2%img->altura;
+              direita.x = (x+JANELA_L/2)%img->largura;
+              direita.y = (y+JANELA_L/2)%img->altura;
               esquerda.x = x-JANELA_L/2-1;
               if(esquerda.x<0)
                 esquerda.x = img->largura - (esquerda.x*-1);
