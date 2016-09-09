@@ -78,17 +78,24 @@ void filtroInt(){
     for(i=0;i<img->n_canais;i++){
         for(y=0;y<img->altura;y++){
             for(x=0;x<img->largura;x++){
-              Coordenada direita,esquerda, cima ,baixo;
+              Coordenada direita,esquerda, cima ,inter;
               direita.x = x+JANELA_L/2%img->largura;
-              direita.y = x+JANELA_L/2%img->largura;
+              direita.y = y+JANELA_L/2%img->largura;
               esquerda.x = x-JANELA_L/2-1;
               if(esquerda.x<0)
                 esquerda.x = img->largura - (esquerda.x*-1);
               esquerda.y = direita.y;
               cima.x = direita.x;
-            
+              cima.y = y-JANELA_A-1;
+              if(cima.y<0)
+                cima.y = img->altura - (cima.y*-1);
+              inter.x = esquerda.x;
+              inter.y = cima.y;
+              buff[i][y][x] = +img->dados[i][direita.y][direita.x]
+                              -img->dados[i][esquerda.y][esquerda.x]
+                              -img->dado[i][cima.y][cima.x] 
+                              +img->dados[i][inter.x][inter.y];
               
-
             }
         }
     }
