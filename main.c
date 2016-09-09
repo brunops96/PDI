@@ -100,11 +100,10 @@ void filtroInt(){
                   esq = buff[i][img->altura-(y+JANELA_A/2)%img->altura][x-JANELA_L/2-1)*-1 -1];
               }
                 
-              
               cima =  buff[i][y-JANELA_A/2][x];
               inter = buff[i][y+JANELA_A/2 -1][x + JANELA_L/2 -1]
               
-                baixo = (baixo*1) -1;
+              buff[i][x][y] = baixo - esq-cima+inter; 
 
             }
         }
