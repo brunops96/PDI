@@ -78,48 +78,16 @@ void filtroInt(){
     for(i=0;i<img->n_canais;i++){
         for(y=0;y<img->altura;y++){
             for(x=0;x<img->largura;x++){
-              int baixo, esq, cima , inter;
-              if(!y+JANELA_A/2>img->altura && x + !JANELA_L/2 >img->largura)
-                baixo = buff[i][y+JANELA_A/2][x + JANELA_L/2];
-              else if(y+JANELA_A/2>img->altura && !JANELA_L/2 >img->largura)
-                baixo = buff[i][img->altura - (y+((JANELA_A/2)%img->altura)][x + JANELA_L/2];
-              else if(!y+JANELA_A/2>img->altura && x + JANELA_L/2 >img->largura)
-                baixo = buff[i][y+JANELA_A/2][x+((JANELA_L/2)%img->largura)];
-              else
-                baixo = buff[i][img->altura-(y+((JANELA_A/2)%img->altura)][x+((JANELA_L/2)%img->largura)];
+              Coordenada direita,esquerda, cima ,baixo;
+              direita.x = x+JANELA_L/2%img->largura;
+              direita.y = x+JANELA_L/2%img->largura;
+              esquerda.x = x-JANELA_L/2-1;
+              if(esquerda.x<0)
+                esquerda.x = img->largura - (esquerda.x*-1);
+              esquerda.y = direita.y;
+              cima.x = direita.x;
+            
               
-              
-              if(x-JANELA_L/2-1>0){
-                if(y+JANELA_A/2<ing->altura)
-                  esq = buff[i][y+JANELA_A/2][x-JANELA_L/2-1];
-                else
-                  esq = buff[i][img->altura-(y+JANELA_A/2)%img->altura][x-JANELA_L/2-1];
-              }
-              else{
-                if(y+JANELA_A/2<ing->altura)
-                  esq = buff[i][y+JANELA_A/2][(x-JANELA_L/2-1)*-1 -1];
-                else
-                  esq = buff[i][img->altura-(y+JANELA_A/2)%img->altura][x-JANELA_L/2-1)*-1 -1];
-              }
-              
-              
-              if(y-JANELA_A/2-1>0){
-                if(x+JANELA_L/2<ing->largura)
-                  esq = buff[i][y-JANELA_A/2-1][x+JANELA_L/2-1];
-                else
-                  esq = buff[i][img->altura-[y-JANELA_A/2-1]][img->largura-(y+JANELA_L/2)%img->largura];
-              }
-              else{
-                if(x+JANELA_L/2<ing->largura)
-                  esq = buff[i][(y-JANELA_A/2-1)*-1 -1][x+JANELA_L/2-1];
-                else
-                  esq = esq = buff[i][img->altura-[(y-JANELA_A/2-1)*-1-1]][img->largura-(y+JANELA_L/2)%img->largura];
-                  
-              }  
-              cima =  buff[i][y-JANELA_A/2][x];
-              inter = buff[i][y+JANELA_A/2 -1][x + JANELA_L/2 -1]
-              
-              buff[i][x][y] = baixo - esq-cima+inter; 
 
             }
         }
