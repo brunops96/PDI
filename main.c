@@ -78,7 +78,13 @@ void filtroInt(){
     for(i=0;i<img->n_canais;i++){
         for(y=0;y<img->largura;y++){
             for(x=0;x<img->largura;x++){
-                
+              int baixo, esq, cima , inter;
+              baixo = buff[i][y+JANELA_A/2][x + JANELA_L/2];
+              esq = buff[i][y][x-JANELA_L/2];
+              cima =  buff[i][y-JANELA_A/2][x];
+              inter = buff[i][y+JANELA_A/2 -1][x + JANELA_L/2 -1]
+              if(baixo < 0)
+                baixo = (baixo*1) -1;
 
             }
         }
