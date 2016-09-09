@@ -83,19 +83,19 @@ void filtroInt(){
               direita.y = (y+JANELA_L/2)%img->altura;
               esquerda.x = x-JANELA_L/2-1;
               if(esquerda.x<0)
-                esquerda.x = img->largura - (esquerda.x*-1);
+                esquerda.x = img->largura - (-esquerda.x);
               esquerda.y = direita.y;
               cima.x = direita.x;
               cima.y = y-JANELA_A/2-1;
               if(cima.y<0)
-                cima.y = img->altura - (cima.y*-1);
+                cima.y = img->altura - (-cima.y);
               inter.x = esquerda.x;
               inter.y = cima.y;
               img_out->dados[i][y][x] = +buff[i][direita.y][direita.x]
                                         -buff[i][esquerda.y][esquerda.x]
                                         -buff[i][cima.y][cima.x] 
                                         +buff[i][inter.y][inter.x];
-              img_out->dados[i][y][x]/=JANELA_A*JANELA*L;
+              img_out->dados[i][y][x]/=JANELA_A*JANELA*_L;
               
             }
         }
