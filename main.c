@@ -82,7 +82,11 @@ void filtroInt(){
               if(!y+JANELA_A/2>img->altura && x + !JANELA_L/2 >img->largura)
                 baixo = buff[i][y+JANELA_A/2][x + JANELA_L/2];
               else if(y+JANELA_A/2>img->altura && !JANELA_L/2 >img->largura)
-                baixo = buff[i][img->altura - (y+JANELA_A/2%img->altura)][x + JANELA_L/2]
+                baixo = buff[i][img->altura - (y+((JANELA_A/2)%img->altura)][x + JANELA_L/2];
+              else if(!y+JANELA_A/2>img->altura && x + JANELA_L/2 >img->largura)
+                baixo = buff[i][y+JANELA_A/2][x+((JANELA_L/2)%img->largura)];
+              else
+                baixo = buff[i][img->altura-(y+((JANELA_A/2)%img->altura)][x+((JANELA_L/2)%img->largura)];
               esq = buff[i][y][x-JANELA_L/2];
               cima =  buff[i][y-JANELA_A/2][x];
               inter = buff[i][y+JANELA_A/2 -1][x + JANELA_L/2 -1]
