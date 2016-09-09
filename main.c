@@ -91,10 +91,10 @@ void filtroInt(){
                 cima.y = img->altura - (cima.y*-1);
               inter.x = esquerda.x;
               inter.y = cima.y;
-              buff[i][y][x] = +img->dados[i][direita.y][direita.x]
-                              -img->dados[i][esquerda.y][esquerda.x]
-                              -img->dado[i][cima.y][cima.x] 
-                              +img->dados[i][inter.x][inter.y];
+              img_out->dados[i][y][x] = +buff[i][direita.y][direita.x]
+                                        -buff[i][esquerda.y][esquerda.x]
+                                        -buff[i][cima.y][cima.x] 
+                                        +buff[i][inter.y][inter.x];
               
             }
         }
