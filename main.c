@@ -78,6 +78,7 @@ void filtroInt(){
     for(i=0;i<img->n_canais;i++){
         for(y=0;y<img->largura;y++){
             for(x=0;x<img->largura;x++){
+                
 
             }
         }
