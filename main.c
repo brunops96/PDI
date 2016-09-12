@@ -16,19 +16,19 @@ void filtroIng(){
     int Y,X;
     float soma=0;
     Imagem* img = abreImagem (INPUT_IMAGE, INPUT_CANAIS);
-    if (!img)
+    if (!img)//teste de entrada
     {
         printf ("Erro abrindo a imagem.\n");
         exit (1);
     }
     Imagem* img_out = criaImagem (img->largura, img->altura, img->n_canais);
     //percorre a imagem
-    for(i=0;i<img->n_canais;i++){
-        for(y=(JANELA_A-1)/2;y<img->altura-(JANELA_A-1)/2;y++){
-            for(x=(JANELA_L-1)/2;x<img->largura-(JANELA_L-1)/2;x++){
+    for(i=0; i < img->n_canais ;i++){//percorre cainais
+        for(y = (JANELA_A-1) / 2 ; y < img->altura - (JANELA_A-1) / 2 ;y++){//percorre linhas 
+            for( x = (JANELA_L-1) / 2 ;x < img->largura - (JANELA_L-1) / 2 ;x++){//percorre colunas
                 soma=0;
                 //Preenche bordas
-                if(y<y-(JANELA_A/2)-1 || y>(y+JANELA_A/2)+1 || x<x-(JANELA_L/2)-1 || x>(x+JANELA_L/2)+1)
+                if( y < y - (JANELA_A / 2) - 1 || y > (y + JANELA_A / 2) + 1 || x < x - (JANELA_L / 2) - 1 ||  x > (x+JANELA_L / 2) + 1)
                     img_out->dados[i][y][x]=0;
                 //JANELA DESLIZANTE
                 else
