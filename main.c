@@ -82,23 +82,42 @@ void filtroInt(){
         for(y=0;y<img->altura;y++){
             for(x=0;x<img->largura;x++){
               Coordenada direita,esquerda, cima ,inter;
+              int auxDX=1,auxDY=1,auxEX=1,auxCY=1;
+              int minus1=1,minus2=1,minus3=1,minus4=1;
               direita.x = (x+JANELA_L/2)%img->largura;
               direita.y = (y+JANELA_A/2)%img->altura;
               esquerda.x = (x-JANELA_L/2)-1;
-              if(esquerda.x<0)
+              if(esquerda.x<0){
                 esquerda.x = img->largura - (esquerda.x*-1);
+                auxEX=-1;
+              }
               esquerda.y = direita.y;
               cima.x = direita.x;
               cima.y = (y-JANELA_A/2)-1;
-              if(cima.y<0)
+              if(cima.y<0){
                 cima.y = img->altura - (cima.y*-1);
+                auxCY=-1;
+              }
               inter.x = esquerda.x;
               inter.y = cima.y;
-              img_out->dados[i][y][x] = (+buff->dados[i][direita.y][direita.x]
-                                        -buff->dados[i][esquerda.y][esquerda.x]
-                                        -buff->dados[i][cima.y][cima.x]
-                                        +buff->dados[i][inter.y][inter.x])/(JANELA_A*JANELA_L);
-
+              if((x+JANELA_L/2)>=img->largura){
+                auxDX=-1 ;
+              }
+              if((y+JANELA_A/2)%img->altura){
+                auxDY=-1;
+              }
+              if(auxDX==-1 || auxDY==-1)
+                minus1=-1;
+              if(auxDY==-1 || auxEX==-1)
+                minus2=-1;
+              if(auxDX==-1 || auxCY==-1)
+                minus3=-1;
+              if(auxEX==-1 || auxCY==-1)
+                minus4=-1;
+                img_out->dados[i][y][x] = (+buff->dados[i][direita.y][direita.x]*minus1
+                                        -buff->dados[i][esquerda.y][esquerda.x]*minus2
+                                        -buff->dados[i][cima.y][cima.x]*minus3
+                                        +buff->dados[i][inter.y][inter.x]*minus4)/(JANELA_A*JANELA_L);
             }
         }
     }
