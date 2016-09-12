@@ -28,7 +28,7 @@ void filtroIng(){
             for( x = (JANELA_L-1) / 2 ;x < img->largura - (JANELA_L-1) / 2 ;x++){//percorre colunas
                 soma=0;
                 //Preenche bordas
-                if( y < y - (JANELA_A / 2) - 1 || y > (y + JANELA_A / 2) + 1 || x < x - (JANELA_L / 2) - 1 ||  x > (x+JANELA_L / 2) + 1)
+                if( y < (JANELA_A / 2) - 1 || y > img->alltura - ((JANELA_A / 2) + 1) || x < (JANELA_L / 2) - 1 ||  x > img->largura - ((JANELA_L / 2) + 1))
                     img_out->dados[i][y][x]=0;
                 //JANELA DESLIZANTE
                 else
@@ -44,61 +44,62 @@ void filtroIng(){
     destroiImagem (img);
     destroiImagem (img_out);
 }
-
+//filtro integral
 void filtroInt(){
     int i,x,y;
     Imagem* img = abreImagem (INPUT_IMAGE, INPUT_CANAIS);
-    if (!img)
+    if (!img)//testa abertura da imagem
     {
         printf ("Erro abrindo a imagem.\n");
         exit (1);
     }
     Imagem* img_out = criaImagem (img->largura, img->altura, img->n_canais);
     Imagem* buff = criaImagem (img->largura, img->altura, img->n_canais);
-    for(i=0;i<img_out->n_canais;i++)
+    /*
+    for(i=0; i < img_out->n_canais ;i++)
         for(y=0;y<img->altura;y++)
             for(x=0;x<img->largura;x++){
                 img_out->dados[i][y][x]=0;
                 buff->dados[i][y][x]=0;
             }
-    for(i=0;i<img->n_canais;i++){
-        for(y=0;y<img->altura;y++){
-            for(x=0;x<img->largura;x++){
-                if(x==0 && y==0)
-                    buff->dados[i][0][0]=img->dados[i][0][0];
-                else if(y==0) {
-                    buff->dados[i][y][x]=buff->dados[i][y][x-1]+img->dados[i][y][x];
-                }
-                else if(x==0) {
-                    buff->dados[i][y][x]=buff->dados[i][y-1][x]+img->dados[i][y][x];
-                }
-                else{
-                    buff->dados[i][y][x]=buff->dados[i][y-1][x]+buff->dados[i][y][x-1]-buff->dados[i][y-1][x-1]+img->dados[i][y][x];
-                }
-            }
+    */
+    //editar pos 0/0
+    buff->dados[i][0][0]=img->dados[i][0][0];
+    for(i=0; i < img->n_canais ; i++)
+        for(y=1;y < img->altura;y++){
+          buff->dados[i][y][0] = buff->dados[i][y-1][0]+img->dados[i][y][0];
+          buff->dados[i][0][y] = buff->dados[i][0][y-1]+img->dados[i][0][y];
         }
-    }
+  
+    for(i = 1; i < img->n_canais ;i++)
+        for(y = 1; y < img->altura ;y++)
+            for( x = 0; x < img->largura ;x++)
+                buff->dados[i][y][x]=buff->dados[i][y-1][x]+buff->dados[i][y][x-1]-buff->dados[i][y-1][x-1]+img->dados[i][y][x];
+  
     for(i=0;i<img->n_canais;i++){
         for(y=0;y<img->altura;y++){
             for(x=0;x<img->largura;x++){
-              Coordenada direita,esquerda, cima ,inter;
-              direita.x = (x+JANELA_L/2)%img->largura;
-              direita.y = (y+JANELA_A/2)%img->altura;
-              esquerda.x = (x-JANELA_L/2)-1;
-              if(esquerda.x<0)
-                esquerda.x = img->largura - (esquerda.x*-1);
-              esquerda.y = direita.y;
-              cima.x = direita.x;
-              cima.y = (y-JANELA_A/2)-1;
-              if(cima.y<0)
-                cima.y = img->altura - (cima.y*-1);
-              inter.x = esquerda.x;
-              inter.y = cima.y;
-              img_out->dados[i][y][x] = (+buff->dados[i][direita.y][direita.x]
-                                        -buff->dados[i][esquerda.y][esquerda.x]
-                                        -buff->dados[i][cima.y][cima.x]
-                                        +buff->dados[i][inter.y][inter.x])/(JANELA_A*JANELA_L);
-
+                Coordenada direita,esquerda, cima ,inter;
+                direita.x = (x+JANELA_L/2);
+                if(direita.x > img->largura-1)
+                    direita.x = img->largura - 1;
+                direita.y = (y+JANELA_A/2);
+                if (direita.y > img->largura-1)
+                    direita.y = img->altura -1;
+                esquerda.x = (x-JANELA_L/2)-1;
+                if(esquerda.x<0)
+                    esquerda.x = 0;
+                esquerda.y = direita.y;
+                cima.x = direita.x;
+                cima.y = (y-JANELA_A/2)-1;
+                if(cima.y<0)
+                    cima.y = 0;
+                inter.x = esquerda.x;
+                inter.y = cima.y;
+                img_out->dados[i][y][x] = (+buff->dados[i][direita.y][direita.x]
+                                          -buff->dados[i][esquerda.y][esquerda.x]
+                                          -buff->dados[i][cima.y][cima.x]
+                                          +buff->dados[i][inter.y][inter.x])/(JANELA_A*JANELA_L);
             }
         }
     }
