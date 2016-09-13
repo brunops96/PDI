@@ -28,7 +28,7 @@ void filtroIng(){
             for( x = (JANELA_L-1) / 2 ;x < img->largura - (JANELA_L-1) / 2 ;x++){//percorre colunas
                 soma=0;
                 //Preenche bordas
-                if( y < (JANELA_A / 2) - 1 || y > img->alltura - ((JANELA_A / 2) + 1) || x < (JANELA_L / 2) - 1 ||  x > img->largura - ((JANELA_L / 2) + 1))
+                if( y < (JANELA_A / 2) - 1 || y > img->altura - ((JANELA_A / 2) + 1) || x < (JANELA_L / 2) - 1 ||  x > img->largura - ((JANELA_L / 2) + 1))
                     img_out->dados[i][y][x]=0;
                 //JANELA DESLIZANTE
                 else
